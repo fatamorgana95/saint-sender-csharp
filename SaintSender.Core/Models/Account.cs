@@ -55,7 +55,7 @@ namespace SaintSender.Core.Models
             }
 
             using (IsolatedStorageFileStream isoStream =
-                new IsolatedStorageFileStream(path, FileMode.CreateNew, isoStore))
+                new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
             {
                 using (StreamReader sw = new StreamReader(isoStream))
                 {
