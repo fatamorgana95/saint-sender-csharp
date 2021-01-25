@@ -44,7 +44,7 @@ namespace SaintSender.Core.Models
             }
         }
 
-        public Account LoadCredentials(string path = "Credentials.xml")
+        public static Account LoadCredentials(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
                 IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
@@ -63,6 +63,13 @@ namespace SaintSender.Core.Models
                     return (Account) xs.Deserialize(sw);
                 }
             }
+        }
+
+        public static bool SavedCredentialsFound(string path = "Credentials.xml")
+        {
+            IsolatedStorageFile isoStore =
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            return isoStore.FileExists(path);
         }
 
         public string Username
