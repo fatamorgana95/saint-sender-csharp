@@ -48,5 +48,16 @@ namespace SaintSender.DesktopUI
             // dispatch user interaction to view model
             _vm.Greet();
         }
+
+        private void LogoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Logout();
+            AskForLogin();
+        }
+
+        private void Logout()
+        {
+            Account.DeleteCredentials();
+        }
     }
 }
