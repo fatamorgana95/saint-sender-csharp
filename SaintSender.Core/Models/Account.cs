@@ -23,6 +23,47 @@ namespace SaintSender.Core.Models
             _rememberUserCredentials = rememberUserCredentials;
         }
 
+        public static void SaveCredentials(Account account, string path = "Credentials.xml")
+        {
+            IsolatedStorageFile isoStore =
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+
+            if (isoStore.FileExists(path))
+            {
+                isoStore.DeleteFile(path);
+            }
+
+            using (IsolatedStorageFileStream isoStream =
+                new IsolatedStorageFileStream(path, FileMode.CreateNew, isoStore))
+            {
+                using (StreamWriter sw = new StreamWriter(isoStream))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(Account));
+                    xs.Serialize(sw, account);
+                }
+            }
+        }
+        
+        public Account  LoadCredentials(string path = "Credentials.xml")
+        {
+            IsolatedStorageFile isoStore =
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+
+            if (!isoStore.FileExists(path))
+            {
+                throw new FileNotFoundException();
+            }
+
+            using (IsolatedStorageFileStream isoStream =
+                new IsolatedStorageFileStream(path, FileMode.CreateNew, isoStore))
+            {
+                using (StreamReader sw = new StreamReader(isoStream))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(Account));
+                    return  (Account) xs.Deserialize(sw);
+                }
+            }
+        }
         public string Username
         {
             get => _username;
