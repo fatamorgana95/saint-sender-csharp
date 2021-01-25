@@ -1,0 +1,14 @@
+﻿<Window x:Class="SaintSender.DesktopUI.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SaintSender.DesktopUI.Views"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="450" Width="800">
+    <Grid>
+    <TextBox HorizontalAlignment="Left" Height="27" Margin="224,125,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330"/>
+        <TextBox HorizontalAlignment="Left" Height="27" Margin="224,188,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="284,268,0,0" FontSize="15" VerticalAlignment="Top" Width="197" Height="39"/>
+    </Grid>
+</Window>
