@@ -43,8 +43,8 @@ namespace SaintSender.Core.Models
                 }
             }
         }
-        
-        public Account  LoadCredentials(string path = "Credentials.xml")
+
+        public Account LoadCredentials(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
                 IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
@@ -60,10 +60,11 @@ namespace SaintSender.Core.Models
                 using (StreamReader sw = new StreamReader(isoStream))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(Account));
-                    return  (Account) xs.Deserialize(sw);
+                    return (Account) xs.Deserialize(sw);
                 }
             }
         }
+
         public string Username
         {
             get => _username;
