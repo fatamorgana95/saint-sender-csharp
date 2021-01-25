@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SaintSender.Core.Models;
 
 namespace SaintSender.DesktopUI.Views
 {
@@ -22,6 +25,54 @@ namespace SaintSender.DesktopUI.Views
         public LoginWindow()
         {
             InitializeComponent();
+        }
+
+
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var username = UsernameTxt.Text;
+            var password = new SecureString();
+            if (IsEmail(username) && PasswordTxt.Password.Length > 0)
+            {
+                SaveCredentials(username, password);
+                CloseWindow();
+            }
+        }
+
+        private void CloseWindow()
+        {
+            this.Close();
+        }
+
+        private void SaveCredentials(string username, SecureString password)
+        {
+            foreach (var character in PasswordTxt.Password)
+            {
+                password.AppendChar(character);
+            }
+
+            bool rememberCredentials = false;
+            if (SaveChBx.IsChecked.HasValue)
+            {
+                rememberCredentials = (bool) SaveChBx.IsChecked;
+            }
+
+            Account account = new Account();
+            account.Setup(username, password, rememberCredentials);
+            Account.SaveCredentials(account);
+        }
+
+        private bool IsEmail(string input)
+        {
+            try
+            {
+                var m = new MailAddress(input);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
