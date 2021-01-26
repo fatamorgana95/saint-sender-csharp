@@ -7,8 +7,21 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800">
     <Grid>
-    <TextBox HorizontalAlignment="Left" Height="27" Margin="224,125,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330"/>
-        <TextBox HorizontalAlignment="Left" Height="27" Margin="224,188,0,0" FontSize="15" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="330"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="284,268,0,0" FontSize="15" VerticalAlignment="Top" Width="197" Height="39"/>
+        <TextBox x:Name="UsernameTxt" Height="27" Margin="224,110,238,0" FontSize="15" TextWrapping="Wrap"
+                 Text="{Binding Username}"
+                 VerticalAlignment="Top" />
+        <PasswordBox x:Name="PasswordTxt" Height="27" Margin="224,188,238,0" FontSize="15" VerticalAlignment="Top"
+                     RenderTransformOrigin="0.427,0.323" />
+        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="303,252,0,0" FontSize="25"
+                VerticalAlignment="Top" Width="178" Height="51" Click="LoginBtn_Click" />
+        <TextBlock HorizontalAlignment="Left" Margin="303,72,0,0" TextWrapping="Wrap" FontSize="25 
+"
+                   VerticalAlignment="Top" Height="33" Width="178" Text="Username" TextAlignment="Center" />
+        <TextBlock HorizontalAlignment="Left" Margin="303,150,0,0" TextWrapping="Wrap" FontSize="25 "
+                   VerticalAlignment="Top" Height="33" Width="178" TextAlignment="Center">
+            <Run Text="Password" /><LineBreak /><Run />
+        </TextBlock>
+        <CheckBox x:Name="SaveChBx" Content="Remember me" HorizontalAlignment="Left" FontSize="20" Margin="510,267,0,0"
+                  VerticalAlignment="Top" Height="28" Width="189" />
     </Grid>
 </Window>
