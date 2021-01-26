@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MailKit;
 using MailKit.Net.Imap;
+using MailKit.Search;
 using MimeKit;
 using SaintSender.Core.Models;
 
@@ -18,9 +19,17 @@ namespace SaintSender.Core.Services
                 //The Inbox folder is always available on all IMAP servers...
                 IMailFolder inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
-                foreach (MimeMessage mail in inbox)
+                var uniqueIdList = client.Inbox.Search(SearchQuery.All);
+
+                foreach (UniqueId id in uniqueIdList)
                 {
-                    //emails.Add(mail);
+                    var info = client.Inbox.Fetch(new[] { id }, MessageSummaryItems.Flags);
+                    var seen = info[0].Flags.Value.HasFlag(MessageFlags.Seen);
+                    var mail = client.Inbox.GetMessage(id);
+                    var sender = mail.Sender == null ? null : mail.Sender.ToString();
+
+                    Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime);
+                    emails.Add(email);
                 }
 
                 client.Disconnect(true);

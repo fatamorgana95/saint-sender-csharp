@@ -43,7 +43,7 @@
             <ListView.View>
                 <GridView >
                     <GridViewColumn Header="Seen"
-                                    DisplayMemberBinding="{Binding Path=IDK}" />  <!-- have to find this data (read/unread)-->
+                                    DisplayMemberBinding="{Binding Path=Seen}" />  
                     <GridViewColumn Header="Sender"
                                     DisplayMemberBinding="{Binding Path=Sender}" />
                     <GridViewColumn Header="Subject"
