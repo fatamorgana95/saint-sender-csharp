@@ -27,7 +27,6 @@ namespace SaintSender.DesktopUI.ViewModels
             set
             {
                 _password = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
             }
         }
 

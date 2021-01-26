@@ -35,9 +35,9 @@ namespace SaintSender.DesktopUI.Views
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            var username = UsernameTxt.Text;
+            var username = _vm.Username;
             var password = new SecureString();
-            if (IsEmail(username) && PasswordTxt.Text.Length > 0)
+            if (IsEmail(username) && PasswordTxt.Password.Length > 0)
             {
                 SaveCredentials(username, password);
                 CloseWindow();
@@ -51,7 +51,7 @@ namespace SaintSender.DesktopUI.Views
 
         private void SaveCredentials(string username, SecureString password)
         {
-            foreach (var character in PasswordTxt.Text)
+            foreach (var character in PasswordTxt.Password)
             {
                 password.AppendChar(character);
             }
