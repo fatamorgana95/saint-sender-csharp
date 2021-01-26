@@ -22,7 +22,7 @@ namespace SaintSender.Core.Services
                 IMailFolder inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
                 
-                AddEmailToList(client);
+                AddEmailsToList(client);
 
                 client.Disconnect(true);
             }
@@ -30,7 +30,7 @@ namespace SaintSender.Core.Services
             return _emails;
         }
 
-        private static void AddEmailToList(ImapClient client)
+        private static void AddEmailsToList(ImapClient client)
         {
             var uniqueIdList = client.Inbox.Search(SearchQuery.All);
             foreach (UniqueId id in uniqueIdList)
