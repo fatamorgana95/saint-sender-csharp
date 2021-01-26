@@ -1,5 +1,4 @@
-﻿using System;
-using SaintSender.DesktopUI.ViewModels;
+﻿using SaintSender.DesktopUI.ViewModels;
 using SaintSender.DesktopUI.Views;
 using System.Windows;
 using SaintSender.Core.Models;

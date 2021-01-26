@@ -1,9 +1,6 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Security;
-using System.Windows;
 using SaintSender.Core.Models;
-using SaintSender.DesktopUI.Annotations;
 
 namespace SaintSender.DesktopUI.ViewModels
 {
