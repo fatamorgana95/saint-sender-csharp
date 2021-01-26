@@ -1,6 +1,7 @@
 ﻿using SaintSender.Core.Interfaces;
 using SaintSender.Core.Services;
 using System.ComponentModel;
+using SaintSender.Core.Models;
 
 namespace SaintSender.DesktopUI.ViewModels
 {
