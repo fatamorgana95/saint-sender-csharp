@@ -36,10 +36,9 @@ namespace SaintSender.DesktopUI.Views
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             var username = _vm.Username;
-            var password = new SecureString();
             if (IsEmail(username) && PasswordTxt.Password.Length > 0)
             {
-                SaveCredentials(username, password);
+                SaveCredentials(username);
                 CloseWindow();
             }
         }
@@ -49,13 +48,8 @@ namespace SaintSender.DesktopUI.Views
             this.Close();
         }
 
-        private void SaveCredentials(string username, SecureString password)
+        private void SaveCredentials(string username)
         {
-            foreach (var character in PasswordTxt.Password)
-            {
-                password.AppendChar(character);
-            }
-
             bool rememberCredentials = false;
             if (SaveChBx.IsChecked.HasValue)
             {
@@ -63,7 +57,7 @@ namespace SaintSender.DesktopUI.Views
             }
 
             Account account = new Account();
-            account.Setup(username, password, rememberCredentials);
+            account.Setup(username, PasswordTxt.Password, rememberCredentials);
             Account.SaveCredentials(account);
         }
 

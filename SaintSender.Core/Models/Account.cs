@@ -1,7 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.IsolatedStorage;
+using System.Reflection;
 using System.Runtime.Serialization;
-using System.Security;
 using System.Xml.Serialization;
 
 namespace SaintSender.Core.Models
@@ -9,14 +10,14 @@ namespace SaintSender.Core.Models
     public class Account : ISerializable
     {
         private string _username;
-        private SecureString _password;
+        private string _password;
         private bool _rememberUserCredentials;
 
         public Account()
         {
         }
 
-        public void Setup(string username, SecureString password, bool rememberUserCredentials)
+        public void Setup(string username, string password, bool rememberUserCredentials)
         {
             _username = username;
             _password = password;
@@ -41,6 +42,11 @@ namespace SaintSender.Core.Models
                     XmlSerializer xs = new XmlSerializer(typeof(Account));
                     xs.Serialize(sw, account);
                 }
+
+                string filePath = isoStream.GetType()
+                    .GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(isoStream)
+                    .ToString();
+                Console.WriteLine(filePath);
             }
         }
 
@@ -85,7 +91,7 @@ namespace SaintSender.Core.Models
             set => _username = value;
         }
 
-        public SecureString Password
+        public string Password
         {
             get => _password;
             set => _password = value;
@@ -107,7 +113,7 @@ namespace SaintSender.Core.Models
         public Account(SerializationInfo info, StreamingContext context)
         {
             Username = (string) info.GetValue("Name", typeof(string));
-            Password = (SecureString) info.GetValue("Password", typeof(SecureString));
+            Password = (string) info.GetValue("Password", typeof(string));
             RememberUserCredentials = (bool) info.GetValue("RememberUserCredentials", typeof(bool));
         }
     }
