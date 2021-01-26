@@ -23,11 +23,18 @@ namespace SaintSender.DesktopUI.Views
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            var username = _vm.Username;
-            if (IsEmail(username) && PasswordTxt.Password.Length > 0)
+            if (_vm.AttemptLogin(_vm.Username, PasswordTxt.Password))
             {
-                SaveCredentials(username);
-                CloseWindow();
+                string username = _vm.Username;
+                if (IsEmail(username) && PasswordTxt.Password.Length > 0)
+                {
+                    SaveCredentials(username);
+                    CloseWindow();
+                }
+            }
+            else
+            {
+                _vm.WarningMessage = "Wrong Credentials";
             }
         }
 
