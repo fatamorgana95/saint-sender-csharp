@@ -1,6 +1,8 @@
-﻿using SaintSender.Core.Interfaces;
+﻿using System.Collections.Generic;
+using SaintSender.Core.Interfaces;
 using SaintSender.Core.Services;
 using System.ComponentModel;
+using MimeKit;
 using SaintSender.Core.Models;
 
 namespace SaintSender.DesktopUI.ViewModels
@@ -14,6 +16,8 @@ namespace SaintSender.DesktopUI.ViewModels
         private string _name;
         private string _greeting;
         private readonly IGreetService _greetService;
+        private List<MimeMessage> _emails;
+        private Account _account;
 
         /// <summary>
         /// Whenever a property value changed the subscribed event handler is called.
@@ -31,6 +35,12 @@ namespace SaintSender.DesktopUI.ViewModels
                 _greeting = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Greeting)));
             }
+        }
+
+        public List<MimeMessage> Emails
+        {
+            get => _emails;
+            set => _emails = value;
         }
 
         /// <summary>
@@ -58,6 +68,16 @@ namespace SaintSender.DesktopUI.ViewModels
         public void Greet()
         {
             Greeting = _greetService.Greet(Name);
+        }
+
+        public void  LoadMails()
+        {
+            _emails = MailService.GetMails(_account.Username, _account.Password);
+        }
+
+        public void LoadCredentials()
+        {
+            _account = Account.LoadCredentials();
         }
     }
 }
