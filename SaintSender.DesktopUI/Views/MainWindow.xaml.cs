@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using SaintSender.DesktopUI.ViewModels;
 using SaintSender.DesktopUI.Views;
 using System.Windows;
+using MimeKit;
 using SaintSender.Core.Models;
+using SaintSender.Core.Services;
 
 namespace SaintSender.DesktopUI
 {
@@ -12,7 +15,6 @@ namespace SaintSender.DesktopUI
     public partial class MainWindow : Window
     {
         private MainWindowViewModel _vm;
-        private Account _account;
 
         public MainWindow()
         {
@@ -36,6 +38,11 @@ namespace SaintSender.DesktopUI
             else
             {
                 AskForLogin();
+            }
+            _vm.LoadMails();
+            foreach (MimeMessage email in _vm.Emails)
+            {
+                Console.WriteLine(email.Subject);
             }
         }
 
