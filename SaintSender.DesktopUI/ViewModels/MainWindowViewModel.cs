@@ -72,9 +72,12 @@ namespace SaintSender.DesktopUI.ViewModels
 
         public void  LoadMails()
         {
+            _emails = MailService.GetMails(_account.Username, _account.Password);
+        }
+
+        public void LoadCredentials()
+        {
             _account = Account.LoadCredentials();
-            //_emails = MailService.GetMails(_account.Username, _account.Password);
-            _emails = MailService.GetMails("tom1.wales2@gmail.com", "9kgSJpKWY8");
         }
     }
 }

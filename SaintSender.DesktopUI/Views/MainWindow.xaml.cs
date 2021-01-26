@@ -27,6 +27,16 @@ namespace SaintSender.DesktopUI
 
         private void LoginProcedure()
         {
+            AuthenticationPhase();
+            _vm.LoadMails();
+            foreach (MimeMessage email in _vm.Emails)
+            {
+                Console.WriteLine(email.Subject);
+            }
+        }
+
+        private void AuthenticationPhase()
+        {
             if (Account.SavedCredentialsFound())
             {
                 Account account = Account.LoadCredentials();
@@ -39,11 +49,7 @@ namespace SaintSender.DesktopUI
             {
                 AskForLogin();
             }
-            _vm.LoadMails();
-            foreach (MimeMessage email in _vm.Emails)
-            {
-                Console.WriteLine(email.Subject);
-            }
+            _vm.LoadCredentials();
         }
 
         private void AskForLogin()
