@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Mail;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using SaintSender.Core.Models;
 using SaintSender.DesktopUI.ViewModels;
 
@@ -23,17 +25,60 @@ namespace SaintSender.DesktopUI.Views
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            var username = _vm.Username;
-            if (IsEmail(username) && PasswordTxt.Password.Length > 0)
+            Login();
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
             {
-                SaveCredentials(username);
-                CloseWindow();
+                Login();
             }
         }
 
-        private void CloseWindow()
+        private void Login()
         {
-            this.Close();
+            string username = _vm.Username;
+            if (!string.IsNullOrEmpty(username))
+            {
+                if (IsEmail(username))
+                {
+                    if (PasswordTxt.Password.Length > 0)
+                    {
+                        if (_vm.AttemptLogin(_vm.Username, PasswordTxt.Password))
+                        {
+                            SaveCredentials(username);
+                            HideWindow();
+                        }
+                        else
+                        {
+                            DisplayWarning("Either the username or password is incorrect");
+                        }
+                    }
+                    else
+                    {
+                        DisplayWarning("Password field is empty");
+                    }
+                }
+                else
+                {
+                    DisplayWarning("Wrong email format");
+                }
+            }
+            else
+            {
+                DisplayWarning("Email field is empty");
+            }
+        }
+
+        private void DisplayWarning(string warningMessage)
+        {
+            _vm.WarningMessage = warningMessage;
+        }
+
+        private void HideWindow()
+        {
+            this.Hide();
         }
 
         private void SaveCredentials(string username)
@@ -60,6 +105,18 @@ namespace SaintSender.DesktopUI.Views
             {
                 return false;
             }
+        }
+
+        public void ClearInputFields()
+        {
+            _vm.Username = string.Empty;
+            _vm.Password = string.Empty;
+            _vm.WarningMessage = String.Empty;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

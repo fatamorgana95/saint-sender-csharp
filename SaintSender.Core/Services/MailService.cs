@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Search;
@@ -42,6 +43,24 @@ namespace SaintSender.Core.Services
 
                 Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime);
                 _emails.Add(email);
+            }
+        }
+
+        public static bool IsCorrectLoginCredentials(string username, string password)
+        {
+            try
+            {
+                using (var client = new ImapClient())
+                {
+                    client.Connect("imap.gmail.com", 993, true);
+                    client.Authenticate(username, password);
+                    client.Disconnect(true);
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

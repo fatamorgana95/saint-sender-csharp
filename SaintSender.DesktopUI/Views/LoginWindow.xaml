@@ -5,23 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaintSender.DesktopUI.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="LoginWindow" Height="450" Width="800" KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Grid>
-        <TextBox x:Name="UsernameTxt" Height="27" Margin="224,110,238,0" FontSize="15" TextWrapping="Wrap"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55*" />
+            <ColumnDefinition Width="17*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="63*" />
+            <RowDefinition Height="356*" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="UsernameTxt" Height="27" Margin="224,47,51.429,0" FontSize="15" TextWrapping="Wrap"
                  Text="{Binding Username}"
-                 VerticalAlignment="Top" />
-        <PasswordBox x:Name="PasswordTxt" Height="27" Margin="224,188,238,0" FontSize="15" VerticalAlignment="Top"
-                     RenderTransformOrigin="0.427,0.323" />
-        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="303,252,0,0" FontSize="25"
-                VerticalAlignment="Top" Width="178" Height="51" Click="LoginBtn_Click" />
-        <TextBlock HorizontalAlignment="Left" Margin="303,72,0,0" TextWrapping="Wrap" FontSize="25 
+                 VerticalAlignment="Top" Grid.Row="1" />
+        <PasswordBox x:Name="PasswordTxt" Height="27" Margin="224,125,51.429,0" FontSize="15" VerticalAlignment="Top"
+                     RenderTransformOrigin="0.427,0.323" Grid.Row="1" />
+        <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="302,206,0,0" FontSize="25"
+                VerticalAlignment="Top" Width="178" Height="51" Click="LoginBtn_Click" Grid.Row="1" />
+        <TextBlock HorizontalAlignment="Left" Margin="303,9,0,0" TextWrapping="Wrap" FontSize="25 
 "
-                   VerticalAlignment="Top" Height="33" Width="178" Text="Username" TextAlignment="Center" />
-        <TextBlock HorizontalAlignment="Left" Margin="303,150,0,0" TextWrapping="Wrap" FontSize="25 "
-                   VerticalAlignment="Top" Height="33" Width="178" TextAlignment="Center">
+                   VerticalAlignment="Top" Height="33" Width="178" Text="Email" TextAlignment="Center" Grid.Row="1" />
+        <TextBlock HorizontalAlignment="Left" Margin="303,87,0,0" TextWrapping="Wrap" FontSize="25 "
+                   VerticalAlignment="Top" Height="33" Width="178" TextAlignment="Center" Grid.Row="1">
             <Run Text="Password" /><LineBreak /><Run />
         </TextBlock>
-        <CheckBox x:Name="SaveChBx" Content="Remember me" HorizontalAlignment="Left" FontSize="20" Margin="510,267,0,0"
-                  VerticalAlignment="Top" Height="28" Width="189" />
+        <CheckBox x:Name="SaveChBx" Content="Remember me" FontSize="20" Margin="0,0,94,107" Grid.Row="1"
+                  Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="189" Height="28" VerticalAlignment="Bottom" />
+        <TextBlock HorizontalAlignment="Left" Margin="124,157,0,0" Grid.Row="1" FontSize="25" TextAlignment="Center"
+                   TextWrapping="Wrap" VerticalAlignment="Top" Height="33" Width="535"
+                   Text="{Binding Path=WarningMessage}" Grid.ColumnSpan="2" />
     </Grid>
 </Window>
