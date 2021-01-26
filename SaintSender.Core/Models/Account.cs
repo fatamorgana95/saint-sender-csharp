@@ -55,20 +55,20 @@ namespace SaintSender.Core.Models
             IsolatedStorageFile isoStore =
                 IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
 
-            if (!isoStore.FileExists(path))
+            if (isoStore.FileExists(path))
             {
-                throw new FileNotFoundException();
-            }
-
-            using (IsolatedStorageFileStream isoStream =
-                new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
-            {
-                using (StreamReader sw = new StreamReader(isoStream))
+                using (IsolatedStorageFileStream isoStream =
+                    new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(Account));
-                    return (Account) xs.Deserialize(sw);
+                    using (StreamReader sw = new StreamReader(isoStream))
+                    {
+                        XmlSerializer xs = new XmlSerializer(typeof(Account));
+                        return (Account) xs.Deserialize(sw);
+                    }
                 }
             }
+
+            return null;
         }
 
         public static void DeleteCredentials(string path = "Credentials.xml")

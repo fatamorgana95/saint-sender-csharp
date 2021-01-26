@@ -70,7 +70,7 @@ namespace SaintSender.DesktopUI.ViewModels
             Greeting = _greetService.Greet(Name);
         }
 
-        public void  LoadMails()
+        public void LoadMails()
         {
             _emails = MailService.GetMails(_account.Username, _account.Password);
         }

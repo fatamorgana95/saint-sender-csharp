@@ -21,8 +21,8 @@ namespace SaintSender.DesktopUI
             // set DataContext to the ViewModel object
             _vm = new MainWindowViewModel();
             DataContext = _vm;
-            LoginProcedure();
             InitializeComponent();
+            LoginProcedure();
         }
 
         private void LoginProcedure()
@@ -51,7 +51,10 @@ namespace SaintSender.DesktopUI
 
         private void AskForLogin()
         {
-            new LoginWindow().ShowDialog();
+            this.Hide();
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
+            this.Show();
         }
 
         private void GreetBtn_Click(object sender, RoutedEventArgs e)
@@ -69,7 +72,6 @@ namespace SaintSender.DesktopUI
         private void Logout()
         {
             Account.DeleteCredentials();
-            Environment.Exit(0);
         }
     }
 }
