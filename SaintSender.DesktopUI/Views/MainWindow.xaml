@@ -30,6 +30,9 @@
                    TextWrapping="Wrap"
                    VerticalAlignment="Top" />
 
+        <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Right" Margin="0,0,20,0"
+                VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
+
         <ListView ItemsSource="{Binding Path=Emails}" Margin="10,100,0,0">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
@@ -51,7 +54,5 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Left" Margin="707,389,0,0"
-                VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
     </Grid>
 </Window>
