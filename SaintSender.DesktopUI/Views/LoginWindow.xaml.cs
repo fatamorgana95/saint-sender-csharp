@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 using System.Windows;
+using System.Windows.Input;
 using SaintSender.Core.Models;
 using SaintSender.DesktopUI.ViewModels;
 
@@ -23,19 +24,55 @@ namespace SaintSender.DesktopUI.Views
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_vm.AttemptLogin(_vm.Username, PasswordTxt.Password))
+            Login();
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
             {
-                string username = _vm.Username;
-                if (IsEmail(username) && PasswordTxt.Password.Length > 0)
+                Login();
+            }
+        }
+
+        private void Login()
+        {
+            string username = _vm.Username;
+            if (!string.IsNullOrEmpty(username))
+            {
+                if (IsEmail(username))
                 {
-                    SaveCredentials(username);
-                    CloseWindow();
+                    if (PasswordTxt.Password.Length > 0)
+                    {
+                        if (_vm.AttemptLogin(_vm.Username, PasswordTxt.Password))
+                        {
+                            SaveCredentials(username);
+                            CloseWindow();
+                        }
+                        else
+                        {
+                            DisplayWarning("Either the username or password is incorrect");
+                        }
+                    }
+                    else
+                    {
+                        DisplayWarning("Password field is empty");
+                    }
+                }
+                else
+                {
+                    DisplayWarning("Wrong email format");
                 }
             }
             else
             {
-                _vm.WarningMessage = "Wrong Credentials";
+                DisplayWarning("Email field is empty");
             }
+        }
+
+        private void DisplayWarning(string warningMessage)
+        {
+            _vm.WarningMessage = warningMessage;
         }
 
         private void CloseWindow()
