@@ -2,14 +2,15 @@
 using MailKit;
 using MailKit.Net.Imap;
 using MimeKit;
+using SaintSender.Core.Models;
 
 namespace SaintSender.Core.Services
 {
     public class MailService
     {
-        public static List<MimeMessage> GetMails(string username, string password)
+        public static List<Email> GetMails(string username, string password)
         {
-            List<MimeMessage> emails = new List<MimeMessage>();
+            List<Email> emails = new List<Email>();
             using (var client = new ImapClient())
             {
                 client.Connect("imap.gmail.com", 993, true);
@@ -19,7 +20,7 @@ namespace SaintSender.Core.Services
                 inbox.Open(FolderAccess.ReadOnly);
                 foreach (MimeMessage mail in inbox)
                 {
-                    emails.Add(mail);
+                    //emails.Add(mail);
                 }
 
                 client.Disconnect(true);
