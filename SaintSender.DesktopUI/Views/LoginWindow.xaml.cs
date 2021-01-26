@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using SaintSender.Core.Models;
 using SaintSender.DesktopUI.ViewModels;
@@ -47,7 +48,7 @@ namespace SaintSender.DesktopUI.Views
                         if (_vm.AttemptLogin(_vm.Username, PasswordTxt.Password))
                         {
                             SaveCredentials(username);
-                            CloseWindow();
+                            HideWindow();
                         }
                         else
                         {
@@ -75,9 +76,9 @@ namespace SaintSender.DesktopUI.Views
             _vm.WarningMessage = warningMessage;
         }
 
-        private void CloseWindow()
+        private void HideWindow()
         {
-            this.Close();
+            this.Hide();
         }
 
         private void SaveCredentials(string username)
@@ -104,6 +105,18 @@ namespace SaintSender.DesktopUI.Views
             {
                 return false;
             }
+        }
+
+        public void ClearInputFields()
+        {
+            _vm.Username = string.Empty;
+            _vm.Password = string.Empty;
+            _vm.WarningMessage = String.Empty;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
