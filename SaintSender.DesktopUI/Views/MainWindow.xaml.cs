@@ -29,10 +29,6 @@ namespace SaintSender.DesktopUI
         {
             AuthenticationPhase();
             _vm.LoadMails();
-            foreach (MimeMessage email in _vm.Emails)
-            {
-                Console.WriteLine(email.Subject);
-            }
         }
 
         private void AuthenticationPhase()
@@ -49,6 +45,7 @@ namespace SaintSender.DesktopUI
             {
                 AskForLogin();
             }
+
             _vm.LoadCredentials();
         }
 
