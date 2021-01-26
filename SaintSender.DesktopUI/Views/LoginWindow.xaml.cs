@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SaintSender.Core.Models;
+using SaintSender.DesktopUI.ViewModels;
 
 namespace SaintSender.DesktopUI.Views
 {
@@ -22,8 +23,12 @@ namespace SaintSender.DesktopUI.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private LoginWindowViewModel _vm;
+
         public LoginWindow()
         {
+            _vm = new LoginWindowViewModel();
+            DataContext = _vm;
             InitializeComponent();
         }
 
@@ -32,7 +37,7 @@ namespace SaintSender.DesktopUI.Views
         {
             var username = UsernameTxt.Text;
             var password = new SecureString();
-            if (IsEmail(username) && PasswordTxt.Password.Length > 0)
+            if (IsEmail(username) && PasswordTxt.Text.Length > 0)
             {
                 SaveCredentials(username, password);
                 CloseWindow();
@@ -46,7 +51,7 @@ namespace SaintSender.DesktopUI.Views
 
         private void SaveCredentials(string username, SecureString password)
         {
-            foreach (var character in PasswordTxt.Password)
+            foreach (var character in PasswordTxt.Text)
             {
                 password.AppendChar(character);
             }

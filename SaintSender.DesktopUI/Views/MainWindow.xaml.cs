@@ -18,6 +18,7 @@ namespace SaintSender.DesktopUI
         {
             // set DataContext to the ViewModel object
             _vm = new MainWindowViewModel();
+            DataContext = _vm;
             LoginProcedure();
             InitializeComponent();
         }

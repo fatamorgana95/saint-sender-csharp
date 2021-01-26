@@ -27,7 +27,7 @@ namespace SaintSender.DesktopUI.ViewModels
             set
             {
                 _password = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PasswordTxtB)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
             }
         }
 
@@ -37,7 +37,7 @@ namespace SaintSender.DesktopUI.ViewModels
             set
             {
                 _username = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UsernameTxtB)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Username)));
             }
         }
     }
