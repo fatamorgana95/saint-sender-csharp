@@ -29,6 +29,28 @@
                    FontSize="28"
                    TextWrapping="Wrap"
                    VerticalAlignment="Top" />
+
+        <ListView ItemsSource="{Binding Path=Emails}" Margin="10,100,0,0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Header="Seen"
+                                    DisplayMemberBinding="{Binding Path=IDK}" />  <!-- have to find this data (read/unread)-->
+                    <GridViewColumn Header="Sender"
+                                    DisplayMemberBinding="{Binding Path=Sender}" />
+                    <GridViewColumn Header="Subject"
+                                    DisplayMemberBinding="{Binding Path=Subject}" />
+                    <GridViewColumn Header="Date"
+                                    DisplayMemberBinding="{Binding Path=Date}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
         <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Left" Margin="707,389,0,0"
                 VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
     </Grid>
