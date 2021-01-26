@@ -59,6 +59,7 @@
     <Compile Include="Services\GreetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IGreetService.cs" />
+    <Compile Include="Services\MailService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\ReadMe.md" />
