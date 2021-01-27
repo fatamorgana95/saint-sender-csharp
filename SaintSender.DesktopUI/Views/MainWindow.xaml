@@ -34,6 +34,11 @@
                 VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
 
         <DataGrid SelectionMode="Single"  AutoGenerateColumns="False"  ItemsSource="{Binding Emails}"  Margin="2,100,2,2" >
+            <DataGrid.Resources>
+                <Style TargetType="DataGrid">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_DoubleClick" />
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="IsHitTestVisible" Value="False"></Setter>
