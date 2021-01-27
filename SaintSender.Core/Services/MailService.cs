@@ -42,7 +42,7 @@ namespace SaintSender.Core.Services
                 var mail = client.Inbox.GetMessage(id);
                 var sender = mail.Sender == null ? null : mail.Sender.ToString();
 
-                Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime);
+                Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime, mail.TextBody);
                 _emails.Add(email);
             }
         }

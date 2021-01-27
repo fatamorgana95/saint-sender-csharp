@@ -8,6 +8,7 @@ using MimeKit;
 using SaintSender.Core.Models;
 using SaintSender.Core.Services;
 using System.Windows.Input;
+using System.Data;
 
 namespace SaintSender.DesktopUI
 {
@@ -76,8 +77,9 @@ namespace SaintSender.DesktopUI
         private void DataGridRow_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.Hide();
-            DataGrid dg = sender as DataGrid;
-            var email = (Email)dg.SelectedItem;
+            DataGrid dataGrid = sender as DataGrid;
+            var email = MailService.GetMails("tom1.wales2@gmail.com", "Almafa1234")[0];
+            //var email = (Email)dataGrid.SelectedItem;
             DetailWindow detailWindow = new DetailWindow(email);
             detailWindow.ShowDialog();
             this.Show();
@@ -94,9 +96,5 @@ namespace SaintSender.DesktopUI
             Account.DeleteCredentials();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Environment.Exit(0);
-        }
     }
 }

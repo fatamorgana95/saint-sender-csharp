@@ -12,5 +12,11 @@ namespace SaintSender.DesktopUI.ViewModels
         {
             _email = email;
         }
+
+        public Email Email
+        {
+            get => _email;
+            set => _email = value;
+        }
     }
 }
