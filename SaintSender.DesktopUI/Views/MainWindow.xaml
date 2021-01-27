@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SaintSender"
         Height="450"
-        Width="800">
+        Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
         <TextBox Text="{Binding Name}"
                  ToolTip="Write a name here a click the Greet button"
@@ -29,8 +29,34 @@
                    FontSize="28"
                    TextWrapping="Wrap"
                    VerticalAlignment="Top" />
-        <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Left" Margin="707,389,0,0"
+
+        <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Right" Margin="0,0,20,0"
                 VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
+
+        <DataGrid SelectionMode="Single"  AutoGenerateColumns="False"  ItemsSource="{Binding Emails}"  Margin="2,100,2,2" >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="IsHitTestVisible" Value="False"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Seen}" Value="True">
+                            <Setter Property="Background" Value="#ccf2ff">
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Seen}" Value="False">
+                            <Setter Property="Background" Value="#FFF3BBAD">
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="auto" Header="From" Binding="{Binding Sender}"></DataGridTextColumn>
+                <DataGridTextColumn Width="auto" Header="Subject" Binding="{Binding Subject}"></DataGridTextColumn>
+                <DataGridTextColumn Width="auto" Header="Date" Binding="{Binding Date}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <Button Content="New Email" HorizontalAlignment="Left" Margin="233,13,0,0" VerticalAlignment="Top" Width="75" Click="NewEmailBtn_Click"/>
     </Grid>
 </Window>

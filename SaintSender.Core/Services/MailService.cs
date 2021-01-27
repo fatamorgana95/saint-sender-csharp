@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Xml.Serialization;
 using MailKit;
 using MailKit.Net.Imap;
+using MailKit.Search;
 using MailKit.Net.Smtp;
 using MimeKit;
 using SaintSender.Core.Interfaces;
@@ -15,9 +16,11 @@ namespace SaintSender.Core.Services
 {
     public class MailService : IBackup
     {
-        public static List<MimeMessage> GetMails(string username, string password)
+
+        private static List<Email> _emails = new List<Email>();
+
+        public static List<Email> GetMails(string username, string password)
         {
-            List<MimeMessage> emails = new List<MimeMessage>();
             using (var client = new ImapClient())
             {
                 client.Connect("imap.gmail.com", 993, true);
@@ -25,15 +28,28 @@ namespace SaintSender.Core.Services
                 //The Inbox folder is always available on all IMAP servers...
                 IMailFolder inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
-                foreach (MimeMessage mail in inbox)
-                {
-                    emails.Add(mail);
-                }
+                
+                AddEmailsToList(client);
 
                 client.Disconnect(true);
             }
 
-            return emails;
+            return _emails;
+        }
+
+        private static void AddEmailsToList(ImapClient client)
+        {
+            var uniqueIdList = client.Inbox.Search(SearchQuery.All);
+            foreach (UniqueId id in uniqueIdList)
+            {
+                var info = client.Inbox.Fetch(new[] {id}, MessageSummaryItems.Flags);
+                var seen = info[0].Flags.Value.HasFlag(MessageFlags.Seen);
+                var mail = client.Inbox.GetMessage(id);
+                var sender = mail.Sender == null ? null : mail.Sender.ToString();
+
+                Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime);
+                _emails.Add(email);
+            }
         }
 
         public static void SendNewEmail(string username, string password, string text, string subject, string toMail)
