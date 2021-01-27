@@ -16,7 +16,7 @@ namespace SaintSender.DesktopUI.ViewModels
         private string _name;
         private string _greeting;
         private readonly IGreetService _greetService;
-        private List<MimeMessage> _emails;
+        private List<Email> _emails;
         private Account _account;
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace SaintSender.DesktopUI.ViewModels
             }
         }
 
-        public List<MimeMessage> Emails
+        public List<Email> Emails
         {
             get => _emails;
             set => _emails = value;
