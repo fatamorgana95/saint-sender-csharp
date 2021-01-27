@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SaintSender.DesktopUI.ViewModels;
 using SaintSender.DesktopUI.Views;
 using System.Windows;
+using System.Windows.Input;
 using MimeKit;
 using SaintSender.Core.Models;
 using SaintSender.Core.Services;
@@ -86,6 +87,14 @@ namespace SaintSender.DesktopUI
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+            {
+                _vm.LoadMails();
+            }
         }
     }
 }

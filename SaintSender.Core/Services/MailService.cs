@@ -21,6 +21,7 @@ namespace SaintSender.Core.Services
 
         public static List<Email> GetMails(string username, string password)
         {
+            _emails = new List<Email>();
             if (CheckInternet() || System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
                 using (var client = new ImapClient())
