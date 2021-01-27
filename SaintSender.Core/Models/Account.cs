@@ -27,7 +27,7 @@ namespace SaintSender.Core.Models
         public static void SaveCredentials(Account account, string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
 
             if (isoStore.FileExists(path))
             {
@@ -42,18 +42,13 @@ namespace SaintSender.Core.Models
                     XmlSerializer xs = new XmlSerializer(typeof(Account));
                     xs.Serialize(sw, account);
                 }
-
-                string filePath = isoStream.GetType()
-                    .GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(isoStream)
-                    .ToString();
-                Console.WriteLine(filePath);
             }
         }
 
         public static Account LoadCredentials(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
 
             if (isoStore.FileExists(path))
             {
@@ -74,14 +69,14 @@ namespace SaintSender.Core.Models
         public static void DeleteCredentials(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
             isoStore.DeleteFile(path);
         }
 
         public static bool SavedCredentialsFound(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
             return isoStore.FileExists(path);
         }
 
