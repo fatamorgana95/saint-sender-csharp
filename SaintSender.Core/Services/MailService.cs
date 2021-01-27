@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Net;
 using System.Reflection;
 using System.Xml.Serialization;
 using MailKit;
@@ -21,7 +22,8 @@ namespace SaintSender.Core.Services
 
         public static List<Email> GetMails(string username, string password)
         {
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            
+            if (CheckInternet()||System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
                 using (var client = new ImapClient())
                 {
@@ -44,6 +46,22 @@ namespace SaintSender.Core.Services
             
 
             return _emails;
+        }
+
+        private static bool CheckInternet()
+        {
+            using (WebClient wc = new WebClient())
+            {
+                try
+                {
+                    var json = wc.DownloadString("http://vanenet.hu/");
+                    return json.Contains("Van");
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
         }
 
         private static void AddEmailsToList(ImapClient client)
