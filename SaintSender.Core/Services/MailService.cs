@@ -28,7 +28,6 @@ namespace SaintSender.Core.Services
 
                 client.Disconnect(true);
             }
-
             return _emails;
         }
 
@@ -40,9 +39,9 @@ namespace SaintSender.Core.Services
                 var info = client.Inbox.Fetch(new[] {id}, MessageSummaryItems.Flags);
                 var seen = info[0].Flags.Value.HasFlag(MessageFlags.Seen);
                 var mail = client.Inbox.GetMessage(id);
-                var sender = mail.Sender == null ? null : mail.Sender.ToString();
+                //var sender = mail.Sender == null ? null : mail.Sender.ToString();
 
-                Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime, mail.TextBody);
+                Email email = new Email(seen, mail.From.ToString(), mail.Subject, mail.Date.DateTime, mail.TextBody);
                 _emails.Add(email);
             }
         }
