@@ -25,7 +25,21 @@ namespace SaintSender.DesktopUI.Views
         public NewEmailWindow()
         {
             _vm = new SendNewEmailWindowViewModel();
+            DataContext = _vm;
             InitializeComponent();
+            _vm.LoadCredentials();
+        }
+
+        private void SendBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //_vm.ToMail = 
+            _vm.SendMail();
+            this.Hide();
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
         }
     }
 }
