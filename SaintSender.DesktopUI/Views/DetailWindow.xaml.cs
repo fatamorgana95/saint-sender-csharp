@@ -19,5 +19,13 @@ namespace SaintSender.DesktopUI.Views
             InitializeComponent();
         }
 
+        private void NewEmailBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            NewEmailWindow newEmailWindow = new NewEmailWindow(Sender.Text);
+            newEmailWindow.ShowDialog();
+            this.Show();
+        }
+
     }
 }

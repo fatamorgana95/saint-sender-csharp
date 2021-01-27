@@ -30,6 +30,14 @@ namespace SaintSender.DesktopUI.Views
             _vm.LoadCredentials();
         }
 
+        public NewEmailWindow(string sender)
+        {
+            _vm = new SendNewEmailWindowViewModel(sender);
+            DataContext = _vm;
+            InitializeComponent();
+            _vm.LoadCredentials();
+        }
+
         private void SendBtn_Click(object sender, RoutedEventArgs e)
         {
             //_vm.ToMail = 
