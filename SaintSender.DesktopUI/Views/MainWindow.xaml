@@ -8,7 +8,10 @@
         Title="SaintSender"
         Height="450"
         Width="800" WindowStartupLocation="CenterScreen" >
-    <Grid>
+    <Window.Resources>
+        <local:BackgroundConverter x:Key="BackgroundConverter"></local:BackgroundConverter>
+    </Window.Resources>
+<Grid>
         <TextBox Text="{Binding Name}"
                  ToolTip="Write a name here a click the Greet button"
                  HorizontalAlignment="Left"
@@ -39,7 +42,7 @@
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_DoubleClick" />
                 </Style>
                 <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="FontWeight" Value="{Binding Seen, Converter={StaticResource BackgroundConverter}}" />
+                    <Setter Property="Background" Value="{Binding Seen, Converter={StaticResource BackgroundConverter}}" />
                 </Style>
             </DataGrid.Resources>
 
