@@ -78,7 +78,6 @@ namespace SaintSender.DesktopUI
         {
             this.Hide();
             DataGrid dataGrid = sender as DataGrid;
-            //var email = MailService.GetMails("tom1.wales2@gmail.com", "Almafa1234")[0];
             var email = (Email)dataGrid.SelectedItem;
             DetailWindow detailWindow = new DetailWindow(email);
             detailWindow.ShowDialog();
