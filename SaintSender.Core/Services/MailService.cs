@@ -30,28 +30,24 @@ namespace SaintSender.Core.Services
             return emails;
         }
 
-        public static void SendNewEmail(string text, string toMail, string toName)
+        public static void SendNewEmail(string username, string password, string text, string subject, string toMail)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Joey Tribbiani", "joey@friends.com"));
-            message.To.Add(new MailboxAddress("Mrs. Chanandler Bong", "chandler@friends.com"));
-            message.Subject = "How you doin'?";
+            message.From.Add(new MailboxAddress(username));
+            message.To.Add(new MailboxAddress(toMail));
+            message.Subject = subject;
 
             message.Body = new TextPart("plain")
             {
-                Text = @"Hey Chandler,
-
-I just wanted to let you know that Monica and I were going to go play some paintball, you in?
-
--- Joey"
+                Text = text
             };
 
             using (var client = new SmtpClient())
             {
-                client.Connect("smtp.friends.com", 587, false);
+                client.Connect("imap.gmail.com", 465, true);
 
                 // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("joey", "password");
+                client.Authenticate(username, password);
 
                 client.Send(message);
                 client.Disconnect(true);
