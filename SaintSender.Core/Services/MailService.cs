@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Net;
 using System.Reflection;
 using System.Xml.Serialization;
 using MailKit;
@@ -16,12 +17,11 @@ namespace SaintSender.Core.Services
 {
     public class MailService
     {
-
         private static List<Email> _emails = new List<Email>();
 
         public static List<Email> GetMails(string username, string password)
         {
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            if (CheckInternet() || System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
                 using (var client = new ImapClient())
                 {
@@ -41,9 +41,25 @@ namespace SaintSender.Core.Services
             {
                 _emails = LoadBackup();
             }
-            
+
 
             return _emails;
+        }
+
+        private static bool CheckInternet()
+        {
+            using (WebClient wc = new WebClient())
+            {
+                try
+                {
+                    var json = wc.DownloadString("http://vanenet.hu/");
+                    return json.Contains("Van");
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
         }
 
         private static void AddEmailsToList(ImapClient client)
@@ -142,7 +158,7 @@ namespace SaintSender.Core.Services
                     using (StreamReader sw = new StreamReader(isoStream))
                     {
                         XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
-                        return (List<Email>)xs.Deserialize(sw);
+                        return (List<Email>) xs.Deserialize(sw);
                     }
                 }
             }
