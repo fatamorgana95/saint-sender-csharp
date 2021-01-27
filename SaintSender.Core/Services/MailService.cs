@@ -17,13 +17,11 @@ namespace SaintSender.Core.Services
 {
     public class MailService
     {
-
         private static List<Email> _emails = new List<Email>();
 
         public static List<Email> GetMails(string username, string password)
         {
-            
-            if (CheckInternet()||System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            if (CheckInternet() || System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
                 using (var client = new ImapClient())
                 {
@@ -43,7 +41,7 @@ namespace SaintSender.Core.Services
             {
                 _emails = LoadBackup();
             }
-            
+
 
             return _emails;
         }
@@ -160,7 +158,7 @@ namespace SaintSender.Core.Services
                     using (StreamReader sw = new StreamReader(isoStream))
                     {
                         XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
-                        return (List<Email>)xs.Deserialize(sw);
+                        return (List<Email>) xs.Deserialize(sw);
                     }
                 }
             }
