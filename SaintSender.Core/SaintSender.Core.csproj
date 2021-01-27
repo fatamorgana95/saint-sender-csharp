@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IBackup.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Services\GreetService.cs" />

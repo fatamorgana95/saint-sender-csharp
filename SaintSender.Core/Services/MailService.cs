@@ -14,25 +14,34 @@ using SaintSender.Core.Models;
 
 namespace SaintSender.Core.Services
 {
-    public class MailService : IBackup
+    public class MailService
     {
 
         private static List<Email> _emails = new List<Email>();
 
         public static List<Email> GetMails(string username, string password)
         {
-            using (var client = new ImapClient())
+            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
-                client.Connect("imap.gmail.com", 993, true);
-                client.Authenticate(username, password);
-                //The Inbox folder is always available on all IMAP servers...
-                IMailFolder inbox = client.Inbox;
-                inbox.Open(FolderAccess.ReadOnly);
-                
-                AddEmailsToList(client);
+                using (var client = new ImapClient())
+                {
+                    client.Connect("imap.gmail.com", 993, true);
+                    client.Authenticate(username, password);
+                    //The Inbox folder is always available on all IMAP servers...
+                    IMailFolder inbox = client.Inbox;
+                    inbox.Open(FolderAccess.ReadOnly);
 
-                client.Disconnect(true);
+                    AddEmailsToList(client);
+
+                    client.Disconnect(true);
+                    NewBackup(_emails);
+                }
             }
+            else
+            {
+                _emails = LoadBackup();
+            }
+            
 
             return _emails;
         }
@@ -94,7 +103,7 @@ namespace SaintSender.Core.Services
             }
         }
 
-        public void NewBackup(List<MimeMessage> emails, string path = "EmailBackup.xml")
+        public static void NewBackup(List<Email> emails, string path = "EmailBackup.xml")
         {
             IsolatedStorageFile isoStore =
                 IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
@@ -109,7 +118,7 @@ namespace SaintSender.Core.Services
             {
                 using (StreamWriter sw = new StreamWriter(isoStream))
                 {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<MimeMessage>));
+                    XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
                     xs.Serialize(sw, emails);
                 }
 
@@ -120,7 +129,7 @@ namespace SaintSender.Core.Services
             }
         }
 
-        public List<MimeMessage> LoadBackup(string path = "EmailBackup.xml")
+        public static List<Email> LoadBackup(string path = "EmailBackup.xml")
         {
             IsolatedStorageFile isoStore =
                 IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
@@ -132,8 +141,8 @@ namespace SaintSender.Core.Services
                 {
                     using (StreamReader sw = new StreamReader(isoStream))
                     {
-                        XmlSerializer xs = new XmlSerializer(typeof(List<MimeMessage>));
-                        return (List<MimeMessage>)xs.Deserialize(sw);
+                        XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
+                        return (List<Email>)xs.Deserialize(sw);
                     }
                 }
             }
