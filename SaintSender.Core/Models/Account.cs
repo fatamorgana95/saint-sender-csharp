@@ -27,7 +27,7 @@ namespace SaintSender.Core.Models
         public static void SaveCredentials(Account account, string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
 
             if (isoStore.FileExists(path))
             {
@@ -48,7 +48,7 @@ namespace SaintSender.Core.Models
         public static Account LoadCredentials(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
 
             if (isoStore.FileExists(path))
             {
@@ -69,14 +69,14 @@ namespace SaintSender.Core.Models
         public static void DeleteCredentials(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
             isoStore.DeleteFile(path);
         }
 
         public static bool SavedCredentialsFound(string path = "Credentials.xml")
         {
             IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
             return isoStore.FileExists(path);
         }
 
