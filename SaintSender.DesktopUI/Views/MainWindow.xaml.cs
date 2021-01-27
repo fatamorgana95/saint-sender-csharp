@@ -79,6 +79,7 @@ namespace SaintSender.DesktopUI
 
         private void Logout()
         {
+            Account.BackupCredentials();
             Account.DeleteCredentials();
         }
 

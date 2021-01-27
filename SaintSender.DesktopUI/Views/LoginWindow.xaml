@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaintSender.DesktopUI.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800" KeyDown="Window_KeyDown" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="LoginWindow" Height="450" Width="800" KeyDown="Window_KeyDown" Closing="Window_Closing"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*" />
@@ -31,8 +32,8 @@
         </TextBlock>
         <CheckBox x:Name="SaveChBx" Content="Remember me" FontSize="20" Margin="0,0,94,107" Grid.Row="1"
                   Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="189" Height="28" VerticalAlignment="Bottom" />
-        <TextBlock HorizontalAlignment="Left" Margin="124,157,0,0" Grid.Row="1" FontSize="25" TextAlignment="Center"
-                   TextWrapping="Wrap" VerticalAlignment="Top" Height="33" Width="535"
+        <TextBlock HorizontalAlignment="Left" Margin="65,157,0,0" Grid.Row="1" FontSize="25" TextAlignment="Center"
+                   TextWrapping="Wrap" VerticalAlignment="Top" Height="33" Width="657"
                    Text="{Binding Path=WarningMessage}" Grid.ColumnSpan="2" />
     </Grid>
 </Window>
