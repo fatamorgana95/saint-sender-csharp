@@ -4,6 +4,7 @@ using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using SaintSender.Core.Services;
 
 namespace SaintSender.Core.Models
 {
@@ -40,9 +41,17 @@ namespace SaintSender.Core.Models
                 using (StreamWriter sw = new StreamWriter(isoStream))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(Account));
-                    xs.Serialize(sw, account);
+                    Account encryptedAccount = EncryptAccount(account);
+                    xs.Serialize(sw, encryptedAccount);
                 }
             }
+        }
+
+        private static Account EncryptAccount(Account account)
+        {
+            account.Username = EncryptService.Encrypt(account.Username);
+            account.Password = EncryptService.Encrypt(account.Password);
+            return account;
         }
 
         public static Account LoadCredentials(string path = "Credentials.xml")
@@ -58,12 +67,20 @@ namespace SaintSender.Core.Models
                     using (StreamReader sw = new StreamReader(isoStream))
                     {
                         XmlSerializer xs = new XmlSerializer(typeof(Account));
-                        return (Account) xs.Deserialize(sw);
+                        Account account = (Account) xs.Deserialize(sw);
+                        return DecryptAccount(account);
                     }
                 }
             }
 
             return null;
+        }
+
+        private static Account DecryptAccount(Account account)
+        {
+            account.Username = EncryptService.Decrypt(account.Username);
+            account.Password = EncryptService.Decrypt(account.Password);
+            return account;
         }
 
         public static void DeleteCredentials(string path = "Credentials.xml")
