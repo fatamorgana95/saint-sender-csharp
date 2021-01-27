@@ -33,26 +33,29 @@
         <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Right" Margin="0,0,20,0"
                 VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
 
-        <ListView ItemsSource="{Binding Path=Emails}" Margin="10,100,0,0">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Stretch" />
+        <DataGrid SelectionMode="Single"  AutoGenerateColumns="False"  ItemsSource="{Binding Emails}"  Margin="2,100,2,2" >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="IsHitTestVisible" Value="False"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Seen}" Value="True">
+                            <Setter Property="Background" Value="#ccf2ff">
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Seen}" Value="False">
+                            <Setter Property="Background" Value="#FFF3BBAD">
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView >
-                    <GridViewColumn Header="Seen"
-                                    DisplayMemberBinding="{Binding Path=Seen}" />  
-                    <GridViewColumn Header="Sender"
-                                    DisplayMemberBinding="{Binding Path=Sender}" />
-                    <GridViewColumn Header="Subject"
-                                    DisplayMemberBinding="{Binding Path=Subject}" />
-                    <GridViewColumn Header="Date"
-                                    DisplayMemberBinding="{Binding Path=Date}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="auto" Header="From" Binding="{Binding Sender}"></DataGridTextColumn>
+                <DataGridTextColumn Width="auto" Header="Subject" Binding="{Binding Subject}"></DataGridTextColumn>
+                <DataGridTextColumn Width="auto" Header="Date" Binding="{Binding Date}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>
