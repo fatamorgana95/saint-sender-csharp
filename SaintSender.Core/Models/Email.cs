@@ -18,5 +18,7 @@ namespace SaintSender.Core.Models
             
         }
 
+        public Email() { }
+
     }
 }
