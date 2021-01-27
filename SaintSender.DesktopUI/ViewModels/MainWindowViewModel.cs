@@ -40,7 +40,11 @@ namespace SaintSender.DesktopUI.ViewModels
         public List<Email> Emails
         {
             get => _emails;
-            set => _emails = value;
+            set
+            {
+             _emails = value;
+             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Emails)));
+            }
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace SaintSender.DesktopUI.ViewModels
 
         public void LoadMails()
         {
-            _emails = MailService.GetMails(_account.Username, _account.Password);
+            Emails = MailService.GetMails(_account.Username, _account.Password);
         }
 
         public void LoadCredentials()

@@ -4,6 +4,7 @@ using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using SaintSender.Core.Services;
 
 namespace SaintSender.Core.Models
 {
@@ -40,14 +41,23 @@ namespace SaintSender.Core.Models
                 using (StreamWriter sw = new StreamWriter(isoStream))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(Account));
-                    xs.Serialize(sw, account);
+                    Account encryptedAccount = EncryptAccount(account);
+                    xs.Serialize(sw, encryptedAccount);
                 }
-
-                string filePath = isoStream.GetType()
-                    .GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(isoStream)
-                    .ToString();
-                Console.WriteLine(filePath);
             }
+        }
+
+        public static void BackupCredentials(string path = "BackupCredentials.xml")
+        {
+            Account account = LoadCredentials();
+            SaveCredentials(account, path);
+        }
+
+        private static Account EncryptAccount(Account account)
+        {
+            account.Username = EncryptService.Encrypt(account.Username);
+            account.Password = EncryptService.Encrypt(account.Password);
+            return account;
         }
 
         public static Account LoadCredentials(string path = "Credentials.xml")
@@ -63,12 +73,44 @@ namespace SaintSender.Core.Models
                     using (StreamReader sw = new StreamReader(isoStream))
                     {
                         XmlSerializer xs = new XmlSerializer(typeof(Account));
-                        return (Account) xs.Deserialize(sw);
+                        Account account = (Account) xs.Deserialize(sw);
+                        return DecryptAccount(account);
+                    }
+                }
+            }
+            else
+            {
+                return LoadBackupAccount();
+            }
+        }
+
+        public static Account LoadBackupAccount(string path = "BackupCredentials.xml")
+        {
+            IsolatedStorageFile isoStore =
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+
+            if (isoStore.FileExists(path))
+            {
+                using (IsolatedStorageFileStream isoStream =
+                    new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
+                {
+                    using (StreamReader sw = new StreamReader(isoStream))
+                    {
+                        XmlSerializer xs = new XmlSerializer(typeof(Account));
+                        Account account = (Account) xs.Deserialize(sw);
+                        return DecryptAccount(account);
                     }
                 }
             }
 
             return null;
+        }
+
+        private static Account DecryptAccount(Account account)
+        {
+            account.Username = EncryptService.Decrypt(account.Username);
+            account.Password = EncryptService.Decrypt(account.Password);
+            return account;
         }
 
         public static void DeleteCredentials(string path = "Credentials.xml")

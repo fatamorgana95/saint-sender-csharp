@@ -24,14 +24,13 @@ namespace SaintSender.DesktopUI
             // set DataContext to the ViewModel object
             _vm = new MainWindowViewModel();
             DataContext = _vm;
-            LoginProcedure();
             InitializeComponent();
+            LoginProcedure();
         }
 
         private void LoginProcedure()
         {
             AuthenticationPhase();
-            _vm.LoadMails();
         }
 
         private void AuthenticationPhase()
@@ -43,13 +42,15 @@ namespace SaintSender.DesktopUI
                 {
                     AskForLogin();
                 }
+                else
+                {
+                    LoadMails();
+                }
             }
             else
             {
                 AskForLogin();
             }
-
-            _vm.LoadCredentials();
         }
 
         private void AskForLogin()
@@ -57,7 +58,14 @@ namespace SaintSender.DesktopUI
             this.Hide();
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
+            LoadMails();
             this.Show();
+        }
+
+        private void LoadMails()
+        {
+            _vm.LoadCredentials();
+            _vm.LoadMails();
         }
 
         private void GreetBtn_Click(object sender, RoutedEventArgs e)
@@ -92,8 +100,21 @@ namespace SaintSender.DesktopUI
 
         private void Logout()
         {
+            Account.BackupCredentials();
             Account.DeleteCredentials();
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+            {
+                _vm.LoadMails();
+            }
+        }
     }
 }

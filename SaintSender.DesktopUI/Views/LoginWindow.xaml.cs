@@ -52,7 +52,24 @@ namespace SaintSender.DesktopUI.Views
                         }
                         else
                         {
-                            DisplayWarning("Either the username or password is incorrect");
+                            if (!HaveInternetConnection())
+                            {
+                                Account backupAccount = Account.LoadBackupAccount();
+                                if (backupAccount != null && backupAccount.Username == _vm.Username &&
+                                    backupAccount.Password == PasswordTxt.Password)
+                                {
+                                    SaveCredentials(username);
+                                    HideWindow();
+                                }
+                                else
+                                {
+                                    DisplayWarning("Given credentials do not meet backup credentials.");
+                                }
+                            }
+                            else
+                            {
+                                DisplayWarning("Either the username or password is incorrect");
+                            }
                         }
                     }
                     else
@@ -69,6 +86,15 @@ namespace SaintSender.DesktopUI.Views
             {
                 DisplayWarning("Email field is empty");
             }
+        }
+
+        private bool HaveInternetConnection()
+        {
+            return System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+        }
+
+        private void CompareLoginWithBackup(string username)
+        {
         }
 
         private void DisplayWarning(string warningMessage)
