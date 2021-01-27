@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaintSender.DesktopUI.Views"
         mc:Ignorable="d"
-        Title="NewEmailWindow" Height="450" Width="800">
+        Title="NewEmailWindow" Height="450" Width="800" WindowStartupLocation="CenterOwner">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="104,141,0,0" TextWrapping="Wrap" Text="Write some message :" VerticalAlignment="Top" Height="22" Width="129"/>
         <TextBlock HorizontalAlignment="Left" Height="21" Margin="97,17,0,0" TextWrapping="Wrap" Text="To: " VerticalAlignment="Top" Width="23"/>
