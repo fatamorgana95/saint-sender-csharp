@@ -38,22 +38,10 @@
                 <Style TargetType="DataGrid">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_DoubleClick" />
                 </Style>
-            </DataGrid.Resources>
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="IsHitTestVisible" Value="False"></Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Seen}" Value="True">
-                            <Setter Property="Background" Value="#ccf2ff">
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Seen}" Value="False">
-                            <Setter Property="Background" Value="#FFF3BBAD">
-                            </Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{Binding Seen, Converter={StaticResource BoolToFontWeightConverter}}" />
                 </Style>
-            </DataGrid.RowStyle>
+            </DataGrid.Resources>
 
             <DataGrid.Columns>
                 <DataGridTextColumn Width="auto" Header="From" Binding="{Binding Sender}"></DataGridTextColumn>
