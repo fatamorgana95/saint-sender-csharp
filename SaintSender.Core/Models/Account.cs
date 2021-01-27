@@ -42,6 +42,11 @@ namespace SaintSender.Core.Models
                     XmlSerializer xs = new XmlSerializer(typeof(Account));
                     xs.Serialize(sw, account);
                 }
+
+                string filePath = isoStream.GetType()
+                    .GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(isoStream)
+                    .ToString();
+                Console.WriteLine(filePath);
             }
         }
 
