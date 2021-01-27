@@ -28,6 +28,7 @@ namespace SaintSender.Core.Services
 
                 client.Disconnect(true);
             }
+            _emails.Reverse();
             return _emails;
         }
 
