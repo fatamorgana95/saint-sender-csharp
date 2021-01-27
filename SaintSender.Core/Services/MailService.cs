@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.IsolatedStorage;
+using System.Reflection;
+using System.Xml.Serialization;
 using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Net.Smtp;
 using MimeKit;
+using SaintSender.Core.Interfaces;
+using SaintSender.Core.Models;
 
 namespace SaintSender.Core.Services
 {
-    public class MailService
+    public class MailService : IBackup
     {
         public static List<MimeMessage> GetMails(string username, string password)
         {
@@ -70,6 +76,53 @@ namespace SaintSender.Core.Services
             {
                 return false;
             }
+        }
+
+        public void NewBackup(List<MimeMessage> emails, string path = "EmailBackup.xml")
+        {
+            IsolatedStorageFile isoStore =
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+
+            if (isoStore.FileExists(path))
+            {
+                isoStore.DeleteFile(path);
+            }
+
+            using (IsolatedStorageFileStream isoStream =
+                new IsolatedStorageFileStream(path, FileMode.CreateNew, isoStore))
+            {
+                using (StreamWriter sw = new StreamWriter(isoStream))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(List<MimeMessage>));
+                    xs.Serialize(sw, emails);
+                }
+
+                string filePath = isoStream.GetType()
+                    .GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(isoStream)
+                    .ToString();
+                Console.WriteLine(filePath);
+            }
+        }
+
+        public List<MimeMessage> LoadBackup(string path = "EmailBackup.xml")
+        {
+            IsolatedStorageFile isoStore =
+                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+
+            if (isoStore.FileExists(path))
+            {
+                using (IsolatedStorageFileStream isoStream =
+                    new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
+                {
+                    using (StreamReader sw = new StreamReader(isoStream))
+                    {
+                        XmlSerializer xs = new XmlSerializer(typeof(List<MimeMessage>));
+                        return (List<MimeMessage>)xs.Deserialize(sw);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
