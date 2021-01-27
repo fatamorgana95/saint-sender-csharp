@@ -63,6 +63,14 @@ namespace SaintSender.DesktopUI
             _vm.Greet();
         }
 
+        private void NewEmailBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            NewEmailWindow newEmailWindow = new NewEmailWindow();
+            newEmailWindow.ShowDialog();
+            this.Show();
+        }
+
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)
         {
             Logout();
