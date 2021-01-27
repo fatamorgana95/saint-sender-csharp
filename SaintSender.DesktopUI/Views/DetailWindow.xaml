@@ -13,6 +13,13 @@
         <TextBlock Text="{Binding Email.Date, StringFormat='Date: {0}'}" Margin="10,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock Text="{Binding Email.Subject, StringFormat='Subject: {0}'}" Margin="10,50,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock Text="Body:" Margin="10,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding Email.Body}" Margin="10,100,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <ScrollViewer 
+                      Width="Auto" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      VerticalAlignment="Top" Margin="0,100,0,0">
+            <TextBlock Text="{Binding Email.Body}" Margin="15,10,15,30" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        </ScrollViewer>
+        
     </Grid>
 </Window>
