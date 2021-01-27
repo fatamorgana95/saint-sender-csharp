@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Search;
+using MailKit.Net.Smtp;
 using MimeKit;
 using SaintSender.Core.Models;
 
@@ -43,6 +44,30 @@ namespace SaintSender.Core.Services
 
                 Email email = new Email(seen, sender, mail.Subject, mail.Date.DateTime);
                 _emails.Add(email);
+            }
+        }
+
+        public static void SendNewEmail(string username, string password, string text, string subject, string toMail)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(username));
+            message.To.Add(new MailboxAddress(toMail));
+            message.Subject = subject;
+
+            message.Body = new TextPart("plain")
+            {
+                Text = text
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("imap.gmail.com", 465, true);
+
+                // Note: only needed if the SMTP server requires authentication
+                client.Authenticate(username, password);
+
+                client.Send(message);
+                client.Disconnect(true);
             }
         }
 
