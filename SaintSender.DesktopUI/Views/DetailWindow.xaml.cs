@@ -26,7 +26,12 @@ namespace SaintSender.DesktopUI.Views
             this.Hide();
             var senderString = ExtractEmail.ExtractEmails(Sender.Text);
             var subject = String.Format("re: {0}", Subject.Text);
-            NewEmailWindow newEmailWindow = new NewEmailWindow(senderString, subject);
+            var split = "Sender: ";
+            string senderSubString = Sender.Text.Substring(Sender.Text.IndexOf(split) + split.Length);
+            var emptyLines = new String('\n', 5);
+            var body = String.Format("{0}{1} sent this (date: {2}):\n" +
+                                     "{3}", emptyLines, senderSubString, Date.Text, Body.Text);
+            NewEmailWindow newEmailWindow = new NewEmailWindow(senderString, subject, body);
             newEmailWindow.ShowDialog();
             this.Show();
         }
@@ -40,14 +45,6 @@ namespace SaintSender.DesktopUI.Views
         {
             Regex reg = new Regex(@"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}", RegexOptions.IgnoreCase);
             Match match;
-
-            //List<string> results = new List<string>();
-            //for (match = reg.Match(textToScrape); match.Success; match = match.NextMatch())
-            //{
-            //    if (!(results.Contains(match.Value)))
-            //        results.Add(match.Value);
-            //}
-
             match = reg.Match(textToScrape);
             return match.Value;
         }

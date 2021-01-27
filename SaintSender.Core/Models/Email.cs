@@ -13,7 +13,7 @@ namespace SaintSender.Core.Models
         public Email(bool seen, string sender, string subject, DateTime date, string body)
         {
             Seen = seen;
-            Sender = sender;
+            Sender = sender.Replace(@"""", String.Empty);
             Subject = subject;
             Date = date;
             Body = body;

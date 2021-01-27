@@ -11,7 +11,7 @@
     <Grid>
 
         <TextBlock x:Name="Sender" Text="{Binding Email.Sender, StringFormat='Sender: {0}'}" Margin="10,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding Email.Date, StringFormat='Date: {0}'}" Margin="10,40,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock x:Name="Date" Text="{Binding Email.Date, StringFormat='Date: {0}'}" Margin="10,40,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock Text="Subject: " Margin="10,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name ="Subject" Text="{Binding Email.Subject}" Margin="55,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <Rectangle HorizontalAlignment="Stretch" Margin="10,90,10,0" Fill="#FF010111" Height="1" VerticalAlignment="Top"/>
@@ -20,7 +20,7 @@
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       VerticalAlignment="Top" Margin="0,100,0,0">
-            <TextBlock Text="{Binding Email.Body}" Margin="15,10,15,30" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+            <TextBlock x:Name="Body" Text="{Binding Email.Body}" Margin="15,10,15,30" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         </ScrollViewer>
         <Button Content="Reply" HorizontalAlignment="Right" Margin="0,20,20,0" VerticalAlignment="Top" Width="75" Click="NewEmailBtn_Click"/>
     </Grid>
