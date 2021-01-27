@@ -9,10 +9,11 @@
         Height="450"
         Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        
-        <TextBlock x:Name="Sender" Text="{Binding Email.Sender, StringFormat='From: {0}'}" Margin="10,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+
+        <TextBlock x:Name="Sender" Text="{Binding Email.Sender, StringFormat='Sender: {0}'}" Margin="10,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock Text="{Binding Email.Date, StringFormat='Date: {0}'}" Margin="10,40,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding Email.Subject, StringFormat='Subject: {0}'}" Margin="10,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock Text="Subject: " Margin="10,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBlock x:Name ="Subject" Text="{Binding Email.Subject}" Margin="55,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <Rectangle HorizontalAlignment="Stretch" Margin="10,90,10,0" Fill="#FF010111" Height="1" VerticalAlignment="Top"/>
         <ScrollViewer 
                       Width="Auto" 

@@ -30,9 +30,9 @@ namespace SaintSender.DesktopUI.Views
             _vm.LoadCredentials();
         }
 
-        public NewEmailWindow(string sender)
+        public NewEmailWindow(string sender, string subject)
         {
-            _vm = new SendNewEmailWindowViewModel(sender);
+            _vm = new SendNewEmailWindowViewModel(sender, subject);
             DataContext = _vm;
             InitializeComponent();
             _vm.LoadCredentials();

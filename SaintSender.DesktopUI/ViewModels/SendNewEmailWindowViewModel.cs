@@ -12,9 +12,10 @@ namespace SaintSender.DesktopUI.ViewModels
         private string _message;
         private string _newMailSubject;
 
-        public SendNewEmailWindowViewModel(String sender)
+        public SendNewEmailWindowViewModel(string sender, string subject)
         {
             ToMail = sender;
+            NewMailSubject = subject;
         }
         
         public SendNewEmailWindowViewModel()
