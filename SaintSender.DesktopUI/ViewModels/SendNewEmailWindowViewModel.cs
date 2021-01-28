@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using SaintSender.Core.Models;
 using SaintSender.Core.Services;
 
@@ -10,6 +11,17 @@ namespace SaintSender.DesktopUI.ViewModels
         private string _toMail;
         private string _message;
         private string _newMailSubject;
+
+        public SendNewEmailWindowViewModel(string sender, string subject, string body)
+        {
+            ToMail = sender;
+            NewMailSubject = subject;
+            Message = body;
+        }
+        
+        public SendNewEmailWindowViewModel()
+        {
+        }
 
 
         /// <summary>

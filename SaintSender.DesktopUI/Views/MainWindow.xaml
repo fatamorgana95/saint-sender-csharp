@@ -8,7 +8,10 @@
         Title="SaintSender"
         Height="450"
         Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing" KeyDown="Window_KeyDown">
-    <Grid>
+    <Window.Resources>
+        <local:BackgroundConverter x:Key="BackgroundConverter"></local:BackgroundConverter>
+    </Window.Resources>
+<Grid>
         <TextBox Text="{Binding Name}"
                  ToolTip="Write a name here a click the Greet button"
                  HorizontalAlignment="Left"
@@ -33,20 +36,15 @@
         <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Right" Margin="0,0,20,0"
                 VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
 
-        <DataGrid x:Name="EmailGrid" SelectionMode="Single" AutoGenerateColumns="False" ItemsSource="{Binding Path=Emails}" Margin="2,100,2,2">
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="IsHitTestVisible" Value="False" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Seen}" Value="True">
-                            <Setter Property="Background" Value="#ccf2ff" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Seen}" Value="False">
-                            <Setter Property="Background" Value="#FFF3BBAD" />
-                        </DataTrigger>
-                    </Style.Triggers>
+        <DataGrid  x:Name="EmailGrid" ItemsSource="{Binding Emails}" AutoGenerateColumns="False" SelectionMode="Single" Margin="2,100,2,2" >
+            <DataGrid.Resources>
+                <Style TargetType="DataGrid">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_DoubleClick" />
                 </Style>
-            </DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background" Value="{Binding Seen, Converter={StaticResource BackgroundConverter}}" />
+                </Style>
+            </DataGrid.Resources>
 
             <DataGrid.Columns>
                 <DataGridTextColumn Width="auto" Header="From" Binding="{Binding Sender}" />

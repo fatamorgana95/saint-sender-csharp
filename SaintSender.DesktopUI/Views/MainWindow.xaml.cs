@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using SaintSender.DesktopUI.ViewModels;
 using SaintSender.DesktopUI.Views;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 using MimeKit;
 using SaintSender.Core.Models;
 using SaintSender.Core.Services;
+using System.Windows.Input;
+using System.Data;
 
 namespace SaintSender.DesktopUI
 {
@@ -77,6 +79,16 @@ namespace SaintSender.DesktopUI
             this.Hide();
             NewEmailWindow newEmailWindow = new NewEmailWindow();
             newEmailWindow.ShowDialog();
+            this.Show();
+        }
+
+        private void DataGridRow_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.Hide();
+            DataGrid dataGrid = sender as DataGrid;
+            var email = (Email)dataGrid.SelectedItem;
+            DetailWindow detailWindow = new DetailWindow(email);
+            detailWindow.ShowDialog();
             this.Show();
         }
 

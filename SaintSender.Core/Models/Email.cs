@@ -7,15 +7,16 @@ namespace SaintSender.Core.Models
         public string Sender { get; set; }
         public string Subject { get; set; }
         public DateTime Date { get; set; }
-        
+        public string Body { get; set; }
 
-        public Email(bool seen, string sender, string subject, DateTime date)
+
+        public Email(bool seen, string sender, string subject, DateTime date, string body)
         {
             Seen = seen;
-            Sender = sender;
+            Sender = sender.Replace(@"""", String.Empty);
             Subject = subject;
             Date = date;
-            
+            Body = body;
         }
 
         public Email() { }
