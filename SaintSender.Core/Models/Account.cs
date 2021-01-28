@@ -99,9 +99,8 @@ namespace SaintSender.Core.Models
 
         public static void DeleteCredentials(string path = "Credentials.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-            isoStore.DeleteFile(path);
+            string filePath = Path.Combine(_path, path);
+            File.Delete(filePath);
         }
 
         public static bool SavedCredentialsFound(string path = "Credentials.xml")
