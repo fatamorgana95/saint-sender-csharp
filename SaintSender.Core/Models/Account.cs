@@ -58,20 +58,15 @@ namespace SaintSender.Core.Models
 
         public static Account LoadCredentials(string path = "Credentials.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            string filePath = Path.Combine(_path, path);
 
-            if (isoStore.FileExists(path))
+            if (File.Exists(filePath))
             {
-                using (IsolatedStorageFileStream isoStream =
-                    new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
+                using (StreamReader sw = new StreamReader(filePath))
                 {
-                    using (StreamReader sw = new StreamReader(isoStream))
-                    {
-                        XmlSerializer xs = new XmlSerializer(typeof(Account));
-                        Account account = (Account) xs.Deserialize(sw);
-                        return DecryptAccount(account);
-                    }
+                    XmlSerializer xs = new XmlSerializer(typeof(Account));
+                    Account account = (Account) xs.Deserialize(sw);
+                    return DecryptAccount(account);
                 }
             }
             else
