@@ -77,7 +77,7 @@ namespace SaintSender.Core.Models
         {
             string filePath = Path.Combine(_path, path);
 
-            if (File.Exists(path))
+            if (File.Exists(filePath))
             {
                 using (StreamReader sw = new StreamReader(filePath))
                 {
