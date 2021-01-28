@@ -105,9 +105,8 @@ namespace SaintSender.Core.Models
 
         public static bool SavedCredentialsFound(string path = "Credentials.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-            return isoStore.FileExists(path);
+            string filePath = Path.Combine(_path, path);
+            return File.Exists(filePath);
         }
 
         public string Username
