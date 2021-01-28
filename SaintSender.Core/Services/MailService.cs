@@ -72,12 +72,29 @@ namespace SaintSender.Core.Services
                 var info = client.Inbox.Fetch(new[] {id}, MessageSummaryItems.Flags);
                 var seen = info[0].Flags.Value.HasFlag(MessageFlags.Seen);
                 var mail = client.Inbox.GetMessage(id);
-                //var sender = mail.Sender == null ? null : mail.Sender.ToString();
 
-                Email email = new Email(seen, mail.From.ToString(), mail.Subject, mail.Date.DateTime, mail.TextBody);
+                Email email = new Email(seen, mail.From.ToString(), mail.Subject, mail.Date.DateTime, mail.TextBody, id);
                 _emails.Add(email);
             }
         }
+
+        public static void SetEmailSeen(UniqueId uId, string username, string password)
+        {
+            if (CheckInternet() || System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                using (var client = new ImapClient())
+                {
+                    client.Connect("imap.gmail.com", 993, true);
+                    client.Authenticate(username, password);
+                    //The Inbox folder is always available on all IMAP servers...
+                    IMailFolder inbox = client.Inbox;
+                    inbox.Open(FolderAccess.ReadWrite);
+                    inbox.AddFlags(uId, MessageFlags.Seen, true);
+                    client.Disconnect(true);
+                }
+            }
+        }
+
 
         public static void SendNewEmail(string username, string password, string text, string subject, string toMail)
         {
