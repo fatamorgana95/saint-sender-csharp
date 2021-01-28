@@ -8,7 +8,7 @@
         Title="SaintSender"
         Height="450"
         Width="800" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="#FF99B4D1">
 
         <TextBlock x:Name="Sender" Text="{Binding Email.Sender, StringFormat='Sender: {0}'}" Margin="10,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name="Date" Text="{Binding Email.Date, StringFormat='Date: {0}'}" Margin="10,40,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
