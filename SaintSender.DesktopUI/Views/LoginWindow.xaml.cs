@@ -55,15 +55,13 @@ namespace SaintSender.DesktopUI.Views
                             if (!HaveInternetConnection())
                             {
                                 Account backupAccount = Account.LoadBackupAccount();
-                                if (backupAccount != null && backupAccount.Username == _vm.Username &&
-                                    backupAccount.Password == PasswordTxt.Password)
+                                if (backupAccount.RememberUserCredentials)
                                 {
-                                    SaveCredentials(username);
-                                    HideWindow();
+                                    Authenticate(username);
                                 }
                                 else
                                 {
-                                    DisplayWarning("Given credentials do not meet backup credentials.");
+                                    CompareLoginWithBackup(backupAccount, username);
                                 }
                             }
                             else
@@ -93,8 +91,24 @@ namespace SaintSender.DesktopUI.Views
             return System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
         }
 
-        private void CompareLoginWithBackup(string username)
+        private void CompareLoginWithBackup(Account backupAccount, string username)
         {
+            Console.WriteLine(backupAccount);
+            if (backupAccount != null && backupAccount.Username == _vm.Username &&
+                backupAccount.Password == PasswordTxt.Password)
+            {
+                Authenticate(username);
+            }
+            else
+            {
+                DisplayWarning("Given credentials do not meet backup credentials.");
+            }
+        }
+
+        private void Authenticate(string username)
+        {
+            SaveCredentials(username);
+            HideWindow();
         }
 
         private void DisplayWarning(string warningMessage)
