@@ -8,7 +8,7 @@ namespace SaintSender.DesktopUI
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "AliceBlue" : "Bisque";
+            return (bool)value ? "White" : "#FF99B4D1";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
