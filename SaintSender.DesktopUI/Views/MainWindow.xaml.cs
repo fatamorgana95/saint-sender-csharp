@@ -109,6 +109,7 @@ namespace SaintSender.DesktopUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Account.BackupCredentials();
             Environment.Exit(0);
         }
 
