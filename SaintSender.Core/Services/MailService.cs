@@ -73,7 +73,8 @@ namespace SaintSender.Core.Services
                 var seen = info[0].Flags.Value.HasFlag(MessageFlags.Seen);
                 var mail = client.Inbox.GetMessage(id);
 
-                Email email = new Email(seen, mail.From.ToString(), mail.Subject, mail.Date.DateTime, mail.TextBody, id);
+                Email email = new Email(seen, mail.From.ToString(), mail.Subject, mail.Date.DateTime, mail.TextBody,
+                    id);
                 _emails.Add(email);
             }
         }

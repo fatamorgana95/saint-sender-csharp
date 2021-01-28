@@ -88,7 +88,7 @@ namespace SaintSender.DesktopUI
         {
             this.Hide();
             DataGrid dataGrid = sender as DataGrid;
-            var email = (Email)dataGrid.SelectedItem;
+            var email = (Email) dataGrid.SelectedItem;
             DetailWindow detailWindow = new DetailWindow(email);
             detailWindow.ShowDialog();
             _vm.SetEmailSeen(email.UId);

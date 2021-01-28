@@ -9,9 +9,9 @@
         Height="450"
         Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing" KeyDown="Window_KeyDown">
     <Window.Resources>
-        <local:BackgroundConverter x:Key="BackgroundConverter"></local:BackgroundConverter>
+        <local:BackgroundConverter x:Key="BackgroundConverter" />
     </Window.Resources>
-<Grid>
+    <Grid>
         <TextBox Text="{Binding Name}"
                  ToolTip="Write a name here a click the Greet button"
                  HorizontalAlignment="Left"
@@ -36,13 +36,15 @@
         <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Right" Margin="0,0,20,0"
                 VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
 
-        <DataGrid  x:Name="EmailGrid" ItemsSource="{Binding Emails}" AutoGenerateColumns="False" SelectionMode="Single" Margin="2,100,2,2" IsReadOnly="True" >
+        <DataGrid x:Name="EmailGrid" ItemsSource="{Binding Emails}" AutoGenerateColumns="False" SelectionMode="Single"
+                  Margin="2,100,2,2" IsReadOnly="True">
             <DataGrid.Resources>
                 <Style TargetType="DataGrid">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_DoubleClick" />
                 </Style>
                 <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="Background" Value="{Binding Seen, Converter={StaticResource BackgroundConverter}}" />
+                    <Setter Property="Background"
+                            Value="{Binding Seen, Converter={StaticResource BackgroundConverter}}" />
                 </Style>
             </DataGrid.Resources>
 

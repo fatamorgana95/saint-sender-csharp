@@ -45,8 +45,8 @@ namespace SaintSender.DesktopUI.ViewModels
             get => _emails;
             set
             {
-             _emails = value;
-             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Emails)));
+                _emails = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Emails)));
             }
         }
 
