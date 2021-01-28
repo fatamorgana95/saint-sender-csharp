@@ -13,6 +13,7 @@ namespace SaintSender.Core.Models
         private string _username;
         private string _password;
         private bool _rememberUserCredentials;
+        private static string _path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Remail";
 
         public Account()
         {
@@ -27,23 +28,18 @@ namespace SaintSender.Core.Models
 
         public static void SaveCredentials(Account account, string path = "Credentials.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            string filePath = Path.Combine(_path, path);
 
-            if (isoStore.FileExists(path))
+            if (File.Exists(filePath))
             {
-                isoStore.DeleteFile(path);
+                File.Delete(filePath);
             }
 
-            using (IsolatedStorageFileStream isoStream =
-                new IsolatedStorageFileStream(path, FileMode.CreateNew, isoStore))
+            using (StreamWriter sw = new StreamWriter(filePath))
             {
-                using (StreamWriter sw = new StreamWriter(isoStream))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(Account));
-                    Account encryptedAccount = EncryptAccount(account);
-                    xs.Serialize(sw, encryptedAccount);
-                }
+                XmlSerializer xs = new XmlSerializer(typeof(Account));
+                Account encryptedAccount = EncryptAccount(account);
+                xs.Serialize(sw, encryptedAccount);
             }
         }
 
