@@ -18,7 +18,6 @@ namespace SaintSender.Core.Services
     public class MailService
     {
         private static List<Email> _emails = new List<Email>();
-        private static IMailFolder _mailFolder;
 
         public static List<Email> GetMails(string username, string password)
         {
@@ -68,7 +67,6 @@ namespace SaintSender.Core.Services
             var uniqueIdList = client.Inbox.Search(SearchQuery.All);
             foreach (UniqueId id in uniqueIdList)
             {
-                _mailFolder = client.Inbox;
                 var info = client.Inbox.Fetch(new[] {id}, MessageSummaryItems.Flags);
                 var seen = info[0].Flags.Value.HasFlag(MessageFlags.Seen);
                 var mail = client.Inbox.GetMessage(id);
