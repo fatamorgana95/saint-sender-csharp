@@ -2,8 +2,10 @@
 using SaintSender.Core.Interfaces;
 using SaintSender.Core.Services;
 using System.ComponentModel;
+using MailKit;
 using MimeKit;
 using SaintSender.Core.Models;
+using MailService = SaintSender.Core.Services.MailService;
 
 namespace SaintSender.DesktopUI.ViewModels
 {
@@ -77,6 +79,11 @@ namespace SaintSender.DesktopUI.ViewModels
         public void LoadMails()
         {
             Emails = MailService.GetMails(_account.Username, _account.Password);
+        }
+
+        public void SetEmailSeen(UniqueId uId)
+        {
+            MailService.SetEmailSeen(uId, _account.Username, _account.Password);
         }
 
         public void LoadCredentials()
