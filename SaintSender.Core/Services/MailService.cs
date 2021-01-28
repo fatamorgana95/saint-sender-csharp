@@ -18,6 +18,7 @@ namespace SaintSender.Core.Services
     public class MailService
     {
         private static List<Email> _emails = new List<Email>();
+        private static string _path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Remail";
 
         public static List<Email> GetMails(string username, string password)
         {
@@ -42,6 +43,7 @@ namespace SaintSender.Core.Services
             {
                 _emails = LoadBackup();
             }
+
             _emails.Reverse();
             return _emails;
         }
@@ -121,27 +123,17 @@ namespace SaintSender.Core.Services
 
         public static void NewBackup(List<Email> emails, string path = "EmailBackup.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            string filePath = Path.Combine(_path, path);
 
-            if (isoStore.FileExists(path))
+            if (File.Exists(filePath))
             {
-                isoStore.DeleteFile(path);
+                File.Exists(filePath);
             }
 
-            using (IsolatedStorageFileStream isoStream =
-                new IsolatedStorageFileStream(path, FileMode.CreateNew, isoStore))
+            using (StreamWriter sw = new StreamWriter(filePath))
             {
-                using (StreamWriter sw = new StreamWriter(isoStream))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
-                    xs.Serialize(sw, emails);
-                }
-
-                string filePath = isoStream.GetType()
-                    .GetField("m_FullPath", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(isoStream)
-                    .ToString();
-                Console.WriteLine(filePath);
+                XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
+                xs.Serialize(sw, emails);
             }
         }
 
