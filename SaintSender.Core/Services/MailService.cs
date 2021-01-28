@@ -139,19 +139,14 @@ namespace SaintSender.Core.Services
 
         public static List<Email> LoadBackup(string path = "EmailBackup.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            string filePath = Path.Combine(_path, path);
 
-            if (isoStore.FileExists(path))
+            if (File.Exists(filePath))
             {
-                using (IsolatedStorageFileStream isoStream =
-                    new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
+                using (StreamReader sw = new StreamReader(filePath))
                 {
-                    using (StreamReader sw = new StreamReader(isoStream))
-                    {
-                        XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
-                        return (List<Email>) xs.Deserialize(sw);
-                    }
+                    XmlSerializer xs = new XmlSerializer(typeof(List<Email>));
+                    return (List<Email>) xs.Deserialize(sw);
                 }
             }
 
