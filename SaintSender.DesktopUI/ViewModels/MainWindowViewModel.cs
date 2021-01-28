@@ -100,6 +100,7 @@ namespace SaintSender.DesktopUI.ViewModels
         public void LoadCredentials()
         {
             _account = Account.LoadCredentials();
+            Name = _account.Username;
         }
     }
 }
