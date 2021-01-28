@@ -9,6 +9,8 @@ using SaintSender.Core.Models;
 using SaintSender.Core.Services;
 using System.Windows.Input;
 using System.Data;
+using MailKit;
+using MailService = SaintSender.Core.Services.MailService;
 
 namespace SaintSender.DesktopUI
 {
@@ -89,6 +91,7 @@ namespace SaintSender.DesktopUI
             var email = (Email)dataGrid.SelectedItem;
             DetailWindow detailWindow = new DetailWindow(email);
             detailWindow.ShowDialog();
+            _vm.SetEmailSeen(email.UId);
             this.Show();
         }
 
