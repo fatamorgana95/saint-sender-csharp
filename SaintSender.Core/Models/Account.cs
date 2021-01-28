@@ -69,28 +69,21 @@ namespace SaintSender.Core.Models
                     return DecryptAccount(account);
                 }
             }
-            else
-            {
-                return LoadBackupAccount();
-            }
+
+            return LoadBackupAccount();
         }
 
         public static Account LoadBackupAccount(string path = "BackupCredentials.xml")
         {
-            IsolatedStorageFile isoStore =
-                IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            string filePath = Path.Combine(_path, path);
 
-            if (isoStore.FileExists(path))
+            if (File.Exists(path))
             {
-                using (IsolatedStorageFileStream isoStream =
-                    new IsolatedStorageFileStream(path, FileMode.Open, isoStore))
+                using (StreamReader sw = new StreamReader(filePath))
                 {
-                    using (StreamReader sw = new StreamReader(isoStream))
-                    {
-                        XmlSerializer xs = new XmlSerializer(typeof(Account));
-                        Account account = (Account) xs.Deserialize(sw);
-                        return DecryptAccount(account);
-                    }
+                    XmlSerializer xs = new XmlSerializer(typeof(Account));
+                    Account account = (Account) xs.Deserialize(sw);
+                    return DecryptAccount(account);
                 }
             }
 
