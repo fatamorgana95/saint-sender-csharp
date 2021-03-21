@@ -1,16 +1,8 @@
 # SaintSender
 
-## Story
+SaintSender is a a desktop client which can store the emails offline on your computer with your gmail account.
+It is written in C# in WPF framework, MVVM pattern was implemented. 
 
-Our customer who is insisted of desktop applications on Windows, wants a desktop client to her GMail account which can store the emails offline, on her computer. This customer is a travel agent who is on the road many times without internet connection.
-But when she has some free time in the middle of nowhere she wants to continue to work on orders which received via email.
-
-### What she needs
-
-* has pop/imap protocol support for gmail account
-* has automatic sync periodically
-* has backup and restore functionality for mails and credentials as well
-* write and send e-mails
 
 ### Feature set
 
@@ -19,32 +11,18 @@ But when she has some free time in the middle of nowhere she wants to continue t
 * new mails can be sent
 * mails backed up to my computer
 * mail backup can be restored
-* periodically checked server for new mails
-* searching in mails with regex
-
-**See details in the full backlog.**
-
-___
-
-## Technical requirements
-
-* MVVM pattern should be applied
-* Every *View* should have a proper *ViewModel* class as its DataContext
-* **DesktopUI** project should not know of MailKit at all, only *SaintSender.Core*
-* Core business logic should be placed in **SaintSender.Core** project independently from the UI:
-  * Domain models aka Entities
-  * Interfaces
-  * Services: e.g. email, backup, credential store
-* Classes in core project are unit tested
-* We should be able to create a new UI (e.g. CLI, web) without even touching the DesktopUI project
-* The communication between layers should be like follows:
-    ![Communication between layers](./data/layer-communication.png)
-
-    The ViewModel is the glue between the view and the backend
 
 
-> [MailKit](https://github.com/jstedfast/MailKit) is a convenient choice for managing imap/smtp communication
+### Screenshots
 
-## Gmail less-secure apps
+![remail_1](https://user-images.githubusercontent.com/36809396/111916958-bceb1480-8a7d-11eb-809e-c4f0d57d3b0f.png)
 
-Create a new gmail account just for testing purposes. In your (test) gmail account [you should enable less-secure apps](https://support.google.com/accounts/answer/6010255?hl=en) otherwise Google will block your desktop app's access and deny of responding
+![remail_4](https://user-images.githubusercontent.com/36809396/111917170-c7f27480-8a7e-11eb-986b-173d68effacc.png)
+
+![remail_3](https://user-images.githubusercontent.com/36809396/111916961-be1c4180-8a7d-11eb-913b-0e17d0c8f8f5.png)
+
+
+### Developers
+
+Vera Bertalan, Máté Szathmári, Roland Dominik Szilágyi
+
