@@ -5,29 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaintSender.DesktopUI"
         mc:Ignorable="d"
-        Title="SainSender"
+        Title="SaintSender"
         Height="450"
-        Width="800">
-    <Grid>
-        <TextBox Text="{Binding Name}"
-                 ToolTip="Write a name here a click the Greet button"
-                 HorizontalAlignment="Left"
-                 Height="23"
-                 Margin="10,10,0,0"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 Width="120" />
-        <Button Content="Greet"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Width="75"
-                Margin="140,13,0,0"
-                Click="GreetBtn_Click" />
+        Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <local:BackgroundConverter x:Key="BackgroundConverter" />
+    </Window.Resources>
+    <Grid Background="#FF99B4D1">
+        <TextBlock
+            HorizontalAlignment="Left"
+            FontSize="15"
+            Height="23"
+            Margin="10,10,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="265">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Hello, {0}!">
+                    <Binding Path="Name" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
         <TextBlock Text="{Binding Greeting}"
                    HorizontalAlignment="Left"
                    Margin="10,45,0,0"
                    FontSize="28"
                    TextWrapping="Wrap"
                    VerticalAlignment="Top" />
+
+        <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Right" Margin="0,13,34,0"
+                VerticalAlignment="Top" Width="75" Click="LogoutBtn_Click" />
+
+        <DataGrid x:Name="EmailGrid" ItemsSource="{Binding Emails}" GridLinesVisibility="None" AutoGenerateColumns="False" SelectionMode="Single"
+                  Margin="10,90,0,0" IsReadOnly="True">
+            <DataGrid.Resources>
+                <Style TargetType="DataGrid">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_DoubleClick" />
+                </Style>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Background"
+                            Value="{Binding Seen, Converter={StaticResource BackgroundConverter}}" />
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="auto" Header="Date" Binding="{Binding Date}" />
+                <DataGridTextColumn Width="200" Header="From"  Binding="{Binding Sender}" />
+                <DataGridTextColumn Width="auto" Header="Subject" Binding="{Binding Subject}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="New Email" HorizontalAlignment="Left" Margin="15,45,0,0" VerticalAlignment="Top" Width="75"
+                Click="NewEmailBtn_Click" />
     </Grid>
 </Window>
